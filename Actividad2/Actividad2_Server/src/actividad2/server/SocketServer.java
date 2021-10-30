@@ -40,6 +40,7 @@ public class SocketServer {
 
 				// Información por consola de la petición recibida
 				System.out.println("SERVER: Atendiendo conexión numero " + ++numConexion);
+				System.out.println("****************************************************");
 
 				// Creamos un nuevo hilo para liberar el hilo principal y atender más peticiones
 				new HiloSocketServer(socketAlCliente, lb);				
