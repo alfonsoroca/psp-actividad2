@@ -75,7 +75,7 @@ public class HiloSocketServer implements Runnable {
 					// Mostramos la solicitud del cliente
 					System.out.println("-----------------------------------");
 					System.out.println(hilo.getName() + " / petición " + numPeticion
-							+ ".- Ha solicitado la búsqueda de un libro por su ISBN y se le han eviado instrucciones.....");
+							+ ".- Ha solicitado la búsqueda de un libro por su ISBN y se le han enviado instrucciones.....");
 
 					// Enviamos las instrucciones al cliente
 					salida.println("Introduce el ISBN del libro que deseas buscar.....");
@@ -103,7 +103,7 @@ public class HiloSocketServer implements Runnable {
 
 					// Mostramos la solicitud del cliente
 					System.out.println(hilo.getName() + " / petición " + numPeticion
-							+ ".- Ha solicitado la búsqueda de un libro por su título y se le han eviado instrucciones.....");
+							+ ".- Ha solicitado la búsqueda de un libro por su título y se le han enviado instrucciones.....");
 
 					// Enviamos las instrucciones al cliente
 					salida.println("Introduce el Título del libro que deseas buscar.....");
@@ -131,7 +131,7 @@ public class HiloSocketServer implements Runnable {
 
 					// Mostramos la solicitud del cliente
 					System.out.println(hilo.getName() + " / petición " + numPeticion
-							+ ".- Ha solicitado la búsqueda de los libros de un Autor y se le han eviado instrucciones.....");
+							+ ".- Ha solicitado la búsqueda de los libros de un Autor y se le han enviado instrucciones.....");
 
 					// Enviamos las instrucciones al cliente
 					salida.println("Introduce el Autor cuyos libros deseas buscar.....");
@@ -159,6 +159,8 @@ public class HiloSocketServer implements Runnable {
 
 					// Para separar la información de los diferentes libros elegimos el caracter
 					// "-".
+					// Mostramos la información por consola y se la añadimos a la cadena que se
+					// envía al cliente.
 					for (Libro l : librosAutor) {
 						System.out.println("		" + l.toString());
 						if (libros == "No disponemos de libros de ese autor.") {
@@ -182,7 +184,7 @@ public class HiloSocketServer implements Runnable {
 
 					// Mostramos la solicitud del cliente
 					System.out.println(hilo.getName() + " / petición " + numPeticion
-							+ ".- Ha solicitado añadir un libro a la libreria y se le han eviado instrucciones.....");
+							+ ".- Ha solicitado añadir un libro a la libreria y se le han enviado instrucciones.....");
 
 					// Enviamos las instrucciones al cliente
 					salida.println("Introduce el ISBN del libro que deseas añadir a la libreria.....");
@@ -240,13 +242,29 @@ public class HiloSocketServer implements Runnable {
 							+ ".- Ha solicitado el cierre de la comunicación");
 
 					// Envío al cliente del aviso de finalización de la comunicación
-					salida.println("Finalizando conexión con el cliente");
+					salida.println("Finalizando conexión con el servidor");
+					
+					// Mostramos información por consola
+					System.out.println("	Conexión con " + hilo.getName() + " finalizada.");
+					
 
 					// Mostramos el fin de la petición
 					System.out.println("Fin de la petición: " + hilo.getName() + " / petición " + numPeticion);
 					System.out.println("-----------------------------------\n");
 
 					continuar = false;
+
+					break;
+
+				default:
+
+					// El envío de información se controla desde el cliente por lo que este caso no
+					// sucede nunca.
+					// Mostramos el aviso correspondiente y finalizamos la petición
+					System.out
+							.println("Se ha recibido una petición no seleccionable por lo que procedemos a su cierre.");
+					System.out.println("Fin de la petición: " + hilo.getName() + " / petición " + numPeticion);
+					System.out.println("-----------------------------------\n");
 
 					break;
 

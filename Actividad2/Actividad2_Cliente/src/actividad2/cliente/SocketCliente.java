@@ -132,13 +132,13 @@ public class SocketCliente {
 					// debemos separar las cadenas de texto. Para ello hemos elegido el caracter
 					// "-".
 
-					// Array en el que cada elemento contiene la información de cada libros enviada
+					// Array en el que cada elemento contiene la información de cada libro enviada
 					// por el servidor en su respuesta.
 					String[] libros = respuesta.split("-");
-
 					System.out.println("	La librería dispone de los siguientes libros de " + textoConsola + ":");
 					for (String s : libros) {
 						System.out.println("		" + s);
+
 					}
 
 					break;
@@ -211,15 +211,23 @@ public class SocketCliente {
 					respuesta = entradaBuffer.readLine();
 					System.out.println(respuesta);
 
-					// Contestamos al servidor
-					System.out.println("Finalizando conexión con el servidor");
-					salida.println(textoConsola);
-
 					continuar = false;
 
 					break;
 
+				default:
+
+					// Si la opción elegida no se encuentra disponible mostramos un aviso por
+					// consola y no mandamos nada al servidor.
+
+					// Información por consola
+					System.out.println(
+							"Ha elegido una opción fuera del rango del menú, por favor inténtelo de nuevo seleccionando una opción del 1 al 5.");
+
+					break;
+
 				}
+
 			} while (continuar);
 
 			// Cierre de la conexion con el servidor
