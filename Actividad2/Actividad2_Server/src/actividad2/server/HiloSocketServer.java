@@ -7,7 +7,8 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
-// Clase que recoge las características y métodos de los objetos R1HiloSocketServer que hacen las veces de hilos del servidor
+// Clase que implementa la interfaz Runnable y recoge las características y
+// métodos de los objetos R1HiloSocketServer que son los hilos del servidor
 public class HiloSocketServer implements Runnable {
 
 	// Contador de clientes conectados
@@ -41,11 +42,6 @@ public class HiloSocketServer implements Runnable {
 	@Override
 	public void run() {
 
-		/*
-		 * PrintStream salida = null; InputStreamReader entrada = null; BufferedReader
-		 * entradaBuffer = null;
-		 */
-
 		try {
 
 			// Creación de objetos para la comunicación con el cliente
@@ -58,7 +54,7 @@ public class HiloSocketServer implements Runnable {
 			String textoEntrante = "";
 			boolean continuar = true;
 
-			// Se procesan entradas hasta que el cliente elija la opción 3
+			// Se procesan entradas hasta que el cliente elija la opción 5
 			while (continuar) {
 
 				// Añadimos una peticion al contador
@@ -102,6 +98,7 @@ public class HiloSocketServer implements Runnable {
 				case "2":
 
 					// Mostramos la solicitud del cliente
+					System.out.println("-----------------------------------");
 					System.out.println(hilo.getName() + " / petición " + numPeticion
 							+ ".- Ha solicitado la búsqueda de un libro por su título y se le han enviado instrucciones.....");
 
@@ -130,6 +127,7 @@ public class HiloSocketServer implements Runnable {
 				case "3":
 
 					// Mostramos la solicitud del cliente
+					System.out.println("-----------------------------------");
 					System.out.println(hilo.getName() + " / petición " + numPeticion
 							+ ".- Ha solicitado la búsqueda de los libros de un Autor y se le han enviado instrucciones.....");
 
@@ -145,16 +143,16 @@ public class HiloSocketServer implements Runnable {
 
 					// El método getByAutor devuelve un ArrayList<Libro> por lo que lo que iteramos
 					// su contenido para mandar la respuesta al cliente en forma de cadena.
-
 					ArrayList<Libro> librosAutor = new ArrayList<>();
 					librosAutor = lb.getByAutor(autor);
-					String libros = "No disponemos de libros de ese autor.";
+					String libros = "";
 
 					// Mostramos la información de los libros del autor solicitado por el cliente y
 					// se los enviamos.
 					System.out.println("	En la libreria se dispone de los siguientes libros de " + autor + ":");
 					if (librosAutor.isEmpty()) {
 						System.out.println("		No disponemos de libros de ese autor.");
+						libros = "No disponemos de libros de ese autor.";
 					}
 
 					// Para separar la información de los diferentes libros elegimos el caracter
@@ -166,10 +164,9 @@ public class HiloSocketServer implements Runnable {
 						if (libros == "No disponemos de libros de ese autor.") {
 							libros = l.toString();
 						} else {
-							libros += "-";
 							libros += l.toString();
+							libros += "-";
 						}
-
 					}
 
 					salida.println(libros);
@@ -183,44 +180,28 @@ public class HiloSocketServer implements Runnable {
 				case "4":
 
 					// Mostramos la solicitud del cliente
+					System.out.println("-----------------------------------");
 					System.out.println(hilo.getName() + " / petición " + numPeticion
 							+ ".- Ha solicitado añadir un libro a la libreria y se le han enviado instrucciones.....");
 
 					// Enviamos las instrucciones al cliente
-					salida.println("Introduce el ISBN del libro que deseas añadir a la libreria.....");
+					salida.println(
+							"Introduce el ISBN, el título, el autor y el precio del libro que deseas añadir a la libreria.....");
 
-					// Recibimos el ISBN del cliente
-					isbn = entradaBuffer.readLine();
+					// Recibimos del cliente un String con los datos del libro a incorporar a la
+					// Libreria
+					textoEntrante = entradaBuffer.readLine();
 
-					// Mostramos la solicitud del cliente
-					System.out
-							.println(hilo.getName() + " / petición " + numPeticion + ".- Ha enviado el ISBN: " + isbn);
+					// Array en el que cada elemento contiene la información de un atributo del
+					// libro enviado por el cliente en su respuesta.
+					String[] libroAnadir = textoEntrante.split("-");
 
-					// Enviamos las instrucciones al cliente
-					salida.println("Introduce el titulo del libro que deseas añadir a la libreria.....");
-
-					// Recibimos el titulo del cliente
-					titulo = entradaBuffer.readLine();
-
-					// Mostramos la solicitud del cliente
-					System.out.println(
-							hilo.getName() + " / petición " + numPeticion + ".- Ha enviado el título: " + titulo);
-
-					// Enviamos las instrucciones al cliente
-					salida.println("Introduce el autor del libro que deseas añadir a la libreria.....");
-
-					// Recibimos el autor del cliente
-					autor = entradaBuffer.readLine();
-
-					// Mostramos la solicitud del cliente
-					System.out.println(
-							hilo.getName() + " / petición " + numPeticion + ".- Ha enviado el autor: " + autor);
-
-					// Enviamos las instrucciones al cliente
-					salida.println("Introduce el precio (00.00) del libro que deseas añadir a la libreria.....");
-
-					// Recibimos el precio del cliente que debemos trans
-					precio = Double.parseDouble(entradaBuffer.readLine());
+					// Asignamos a cada uno de los atributos del Libro el elemento correspondiente
+					// de String[]. Para el precio debemos hacer una conversión de String a double.
+					isbn = libroAnadir[0];
+					titulo = libroAnadir[1];
+					autor = libroAnadir[2];
+					precio = Double.parseDouble(libroAnadir[3]);
 
 					// Con todos los datos recibidos del cliente añadimos el libro a la librería
 					lb.addLibro(new Libro(isbn, titulo, autor, precio));
@@ -230,7 +211,8 @@ public class HiloSocketServer implements Runnable {
 					salida.println(lb.getByIsbn(isbn));
 
 					// Mostramos el fin de la petición
-					System.out.println("Fin de la petición: " + hilo.getName() + " / petición " + numPeticion + "\n");
+					System.out.println("Fin de la petición: " + hilo.getName() + " / petición " + numPeticion);
+					System.out.println("-----------------------------------\n");
 
 					break;
 
@@ -243,10 +225,9 @@ public class HiloSocketServer implements Runnable {
 
 					// Envío al cliente del aviso de finalización de la comunicación
 					salida.println("Finalizando conexión con el servidor");
-					
+
 					// Mostramos información por consola
 					System.out.println("	Conexión con " + hilo.getName() + " finalizada.");
-					
 
 					// Mostramos el fin de la petición
 					System.out.println("Fin de la petición: " + hilo.getName() + " / petición " + numPeticion);
@@ -282,5 +263,4 @@ public class HiloSocketServer implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
 }

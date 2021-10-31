@@ -15,7 +15,7 @@ public class Libreria {
 		libreria.add(new Libro("2222", "Dune", "F.Herbert", 20.00));
 		libreria.add(new Libro("3333", "1Q84", "H.Murakami", 25.00));
 		libreria.add(new Libro("4444", "El nombre de la rosa", "Umberto Eco", 30.00));
-		libreria.add(new Libro("5555", "Novelas ejemplares", "M.Cervantes", 35.00)); //
+		libreria.add(new Libro("5555", "Novelas ejemplares", "M.Cervantes", 35.00));
 
 	}
 
@@ -28,6 +28,7 @@ public class Libreria {
 		this.libreria = libreria;
 	}
 
+	// Requerimiento 1
 	// Método para la búsqueda de un objeto Libro por ISBN
 	public String getByIsbn(String isbn) {
 
@@ -42,6 +43,7 @@ public class Libreria {
 		return resultado;
 	}
 
+	// Requerimiento 2
 	// Método para la búsqueda de un objeto Libro por Título
 	public String getByTitulo(String titulo) {
 
@@ -56,12 +58,7 @@ public class Libreria {
 		return resultado;
 	}
 
-	// Método para añadir libros a la Libreria
-	public synchronized void addLibro(Libro libro) {
-		libreria.add(libro);
-
-	}
-
+	// Requerimiento 3
 	// Método para la búsqueda de un objeto Libro por autor
 	public ArrayList<Libro> getByAutor(String autor) {
 
@@ -74,6 +71,12 @@ public class Libreria {
 			}
 		}
 		return resultado;
+	}
+
+	// Requerimiento 4
+	// Método para añadir libros a la Libreria
+	public synchronized void addLibro(Libro libro) {
+		libreria.add(libro);
 	}
 
 }

@@ -154,43 +154,29 @@ public class SocketCliente {
 					respuesta = entradaBuffer.readLine();
 					System.out.println(respuesta);
 
-					// Contestamos al servidor pasándole el ISBN
+					// Comenazamos la introdución de datos solicitados por el servidor que
+					// almacenamos en un String
+					String libroLibreria = "";
+
+					System.out.println("Introduce el ISBN:");
 					textoConsola = sc.nextLine();
-					salida.println(textoConsola);
+					libroLibreria += textoConsola + "-";
 
-					// Información por consola
-					System.out.println("CLIENTE: En espera de respuesta ......");
-
-					// Lectura y muestra por consola de la respuesta del servidor
-					respuesta = entradaBuffer.readLine();
-					System.out.println(respuesta);
-
-					// Contestamos al servidor pasándole el título
+					System.out.println("Introduce el título:");
 					textoConsola = sc.nextLine();
-					salida.println(textoConsola);
+					libroLibreria += textoConsola + "-";
 
-					// Información por consola
-					System.out.println("CLIENTE: En espera de respuesta ......");
-
-					// Lectura y muestra por consola de la respuesta del servidor
-					respuesta = entradaBuffer.readLine();
-					System.out.println(respuesta);
-
-					// Contestamos al servidor pasándole el autor
+					System.out.println("Introduce el autor:");
 					textoConsola = sc.nextLine();
-					salida.println(textoConsola);
+					libroLibreria += textoConsola + "-";
 
-					// Información por consola
-					System.out.println("CLIENTE: En espera de respuesta ......");
-
-					// Lectura y muestra por consola de la respuesta del servidor
-					respuesta = entradaBuffer.readLine();
-					System.out.println(respuesta);
-
-					// Contestamos al servidor pasándole el precio
+					System.out.println("Introduce el precio:");
 					textoConsola = sc.nextLine();
-					salida.println(textoConsola);
+					libroLibreria += textoConsola;
 
+					// Contestamos al servidor pasándole el String;					
+					salida.println(libroLibreria);
+					
 					// Información por consola
 					System.out.println("CLIENTE: En espera de respuesta ......");
 

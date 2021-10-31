@@ -12,7 +12,7 @@ public class SocketServer {
 	public static final int PUERTO = 2021;
 
 	public static void main(String[] args) {
-		
+
 		// Inicializamos la Libreria
 		Libreria lb = new Libreria();
 
@@ -33,7 +33,7 @@ public class SocketServer {
 			serverSocket.bind(direccion);
 
 			// Bucle infinito para poner al servidor en escucha
-			while (true) {				
+			while (true) {
 
 				// Aceptación de peticiones del cliente
 				Socket socketAlCliente = serverSocket.accept();
@@ -43,8 +43,7 @@ public class SocketServer {
 				System.out.println("****************************************************");
 
 				// Creamos un nuevo hilo para liberar el hilo principal y atender más peticiones
-				new HiloSocketServer(socketAlCliente, lb);				
-
+				new HiloSocketServer(socketAlCliente, lb);
 			}
 		} catch (IOException e) {
 			System.err.println("SERVER: Error de entrada/salida");
@@ -53,7 +52,5 @@ public class SocketServer {
 			System.err.println("SERVER: Error -> " + e);
 			e.printStackTrace();
 		}
-
 	}
-
 }
